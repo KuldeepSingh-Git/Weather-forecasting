@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'styling.css' %}">
+    <title>WeatherCheck</title>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="weather-check">
+                <a id="link" href="#">WeatherCheck</a>
+            </div>
+        </div>
+        <div class="header-center">
+            <div class="search-area">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input class="search-bar" name="city" placeholder="City Name" type="text">
+                    <button class="search-button" name="search-button" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <div class="header-right">
+            
+            <div class="date-time">
+                <div class="time">
+                    {{ today_time }}
+                </div>
+                <div class="date">
+                    {{ today_date }}
+                </div>
+            </div>
+          
+        </div>
+    </div>
+    <div class="main-body">
+        {% if weather_data %}
+        <div class="content">
+            <div class="city-weather">
+                <div class="upper">
+                    <div class="temp-weather">
+                        <div class="temp-weather-left">
+                            <img src="static/{{weather_data.icon}}.png" alt="{{ weather_data.icon }}">
+                        </div>
+                        <div class="temp-weather-right">
+                            <div class="temp-weather-right-upper">
+                                {{ weather_data.temperature}}&#x2103
+                            </div>
+                            <div class="temp-weather-right-lower">
+                                <p id="weather-status">{{ weather_data.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="location">
+                        <div class="city">
+                            {{weather_data.city}}
+                        </div>
+                        <div class="country">
+                            {{weather_data.country}}
+                        </div>
+                    </div>
+                </div>
+                <div class="lower">
+                    <div class="lower-details">
+                        <div class="max-temp">
+                            <div class="city-max-temp">
+                                {{weather_data.max_temp}}&#x2103
+                            </div>
+                            <div class="max-temp-detail">
+                                Max
+                            </div>
+                        </div>
+                        <div class="min-temp">
+                            <div class="city-min-temp">
+                                {{weather_data.min_temp}}&#x2103
+                            </div>
+                            <div class="min-temp-detail">
+                                Min
+                            </div>
+                        </div>
+                        <div class="sun-rise">
+                            <div class="city-sun-rise">
+                                {{weather_data.sun_rise}}
+                            </div>
+                            <div class="sun-rise-detail">
+                                Sunrise
+                            </div>
+                        </div>
+                        <div class="sun-set">
+                            <div class="city-sun-set">
+                                {{weather_data.sun_set}}
+                            </div>
+                            <div class="sun-set-detail">
+                                Sunset
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="city-detail">
+                <div class="city-weather-details">
+                    <div id="city-pressure">
+                        Pressure : {{weather_data.pressure}}mbar
+                    </div>
+                    <div id="city-humidity">
+                        Humidity : {{weather_data.humidity}}%
+                    </div>
+                    <div id="city-wind-speed">
+                        Wind speed : {{weather_data.wind}} km/h
+                    </div>
+                    <div id="city-feel-like">
+                        Feel like : {{weather_data.feel_like}}&#x2103
+                    </div>
+                    <div id="city-visibility">
+                        Visibility : {{weather_data.visibility}} km
+                    </div>
+                    <div id="city-dewpoint">
+                        Dew Point : {{weather_data.DewPoint}}&#x2103
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="footer">
+        {% if forecast_data %}
+        <div class="daily-forecast">
+            {% for forecast in forecast_data %}
+            <div class="forecast">
+                <div class = next-day1-name >{{ forecast.day}}</div>
+                <div class = next-day1-name >{{ forecast.date}}</div>
+                <div class = next-day1-temp >&#8595 {{ forecast.min_max_Temp }} &#8593</div>
+                <div class = next-day1-speed >{{ forecast.wind }} km/h</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
