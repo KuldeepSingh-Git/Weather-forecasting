@@ -5,7 +5,7 @@ This dynamic weather forecasting web application is built using Python, Django, 
 *** Prerequisites ***
 
 Before you can use this application, ensure that you have the following prerequisites installed:
-- Python 3.x
+- Python 3
 - Django 4.2.3
 - requests
 
